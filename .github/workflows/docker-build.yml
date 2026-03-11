@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Docker Build and Test
 
 on:
   push:
@@ -11,32 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4  # v2 → v4 (actuel)
+    - uses: actions/checkout@v4
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3  # Multi-arch support
+      uses: docker/setup-qemu-action@v3
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3  # v1 → v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}  # Convention majuscules
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    # SUPPRIME Docker Hub login (inutile)
 
-    - name: Build and push
-      uses: docker/build-push-action@v6  # v2 → v6 (actuel 2026)
+    - name: Build image
+      id: build
+      uses: docker/build-push-action@v6
       with:
         context: .
-        platforms: linux/amd64,linux/arm64  # Multi-arch pour tes serveurs
-        push: ${{ github.event_name != 'pull_request' }}  # Push seulement sur push main
+        platforms: linux/amd64,linux/arm64
+        push: false  # Build local seulement
         tags: |
-          lamacheref/openindexv2:latest
+          lamacheref/openindexv2:local
           lamacheref/openindexv2:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        outputs: type=image,name=image_id,push=false  # Garde image en mémoire
 
     - name: Verify image
       run: |
-        docker run --rm lamacheref/openindexv2:latest echo "Build successful"
+        docker run --rm ${{ steps.build.outputs.image_id }} echo "Build successful"
+        docker image ls lamacheref/openindexv2  # Liste images locales
