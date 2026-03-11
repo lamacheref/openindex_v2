@@ -1,5 +1,8 @@
 FROM node:18-alpine
 
+# Ajouter la commande de test
+RUN apk add --no-cache bash
+
 # Créer et définir le répertoire de travail
 WORKDIR /usr/src/app
 
