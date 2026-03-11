@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: openindex
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  crawler:
+    build: .
+    command: python src/smb_crawler_postgresql.py
+    depends_on:
+      - db
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:

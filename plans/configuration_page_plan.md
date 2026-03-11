@@ -1,0 +1,11 @@
+flowchart TD
+    A[Page de Configuration] --> B[Configuration du Crawler]
+    A --> C[Gestion des Configurations]
+    B --> D[Serveur SMB]
+    B --> E[Partages]
+    B --> F[Login/Mot de passe]
+    B --> G[Path]
+    C --> H[Ajouter une Configuration]
+    C --> I[Modifier une Configuration]
+    C --> J[Supprimer une Configuration]
+    C --> K[Liste des Configurations]
