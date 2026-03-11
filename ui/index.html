@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard du Crawler SMB</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Colonne de menu à gauche -->
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#">Tableau de bord</a></li>
+                <li><a href="#">Statistiques</a></li>
+                <li><a href="#">Fichiers</a></li>
+                <li><a href="#">Répertoires</a></li>
+                <li><a href="#">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="main-content">
+            <!-- Entête fixe -->
+            <header class="header">
+                <h1>Dashboard du Crawler SMB</h1>
+                <div class="header-actions">
+                    <button>Actualiser</button>
+                    <button>Exporter</button>
+                </div>
+            </header>
+
+            <!-- Section de dashboard principale -->
+            <section class="dashboard-section">
+                <!-- Bloc de statistiques -->
+                <div class="stats-block">
+                    <h2>Statistiques</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Fichiers indexés</h3>
+                            <p id="file-count">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Répertoires explorés</h3>
+                            <p id="dir-count">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Taille totale</h3>
+                            <p id="total-size">0 MB</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Fichiers en double</h3>
+                            <p id="duplicate-count">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloc de fichiers récents -->
+                <div class="recent-files-block">
+                    <h2>Fichiers récents</h2>
+                    <div class="file-list">
+                        <!-- Contenu dynamique sera ajouté ici -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
