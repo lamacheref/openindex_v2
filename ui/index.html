@@ -6,9 +6,8 @@
     <title>Dashboard du Crawler SMB</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-last-commit="" data-user="admin">
     <div class="dashboard-container">
-        <!-- Colonne de menu à gauche -->
         <aside class="sidebar">
             <h2>Menu</h2>
             <ul>
@@ -20,20 +19,26 @@
             </ul>
         </aside>
 
-        <!-- Contenu principal -->
         <main class="main-content">
-            <!-- Entête fixe -->
             <header class="header">
-                <h1>Dashboard du Crawler SMB</h1>
-                <div class="header-actions">
-                    <button>Actualiser</button>
-                    <button>Exporter</button>
+                <div class="header-left">
+                    <div class="logo" aria-hidden="true">OI</div>
+                    <div class="project-meta">
+                        <h1>OpenIndex SMB Crawler</h1>
+                        <p>v<span id="project-version">-</span></p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="user-info">Utilisateur : <strong id="current-user">-</strong></div>
+                    <div class="crawler-status status-available" id="crawler-status">
+                        <span class="status-dot" aria-hidden="true"></span>
+                        <span class="status-label">Crawler disponible</span>
+                    </div>
                 </div>
             </header>
 
-            <!-- Section de dashboard principale -->
             <section class="dashboard-section">
-                <!-- Bloc de statistiques -->
                 <div class="stats-block">
                     <h2>Statistiques</h2>
                     <div class="stats-grid">
@@ -56,14 +61,18 @@
                     </div>
                 </div>
 
-                <!-- Bloc de fichiers récents -->
                 <div class="recent-files-block">
                     <h2>Fichiers récents</h2>
                     <div class="file-list">
-                        <!-- Contenu dynamique sera ajouté ici -->
                     </div>
                 </div>
             </section>
+
+            <footer class="footer">
+                <span>SMiDeN</span>
+                <span>Dernier commit appliqué : <code id="last-commit">-</code></span>
+                <span><a href="../LICENSE" target="_blank" rel="noopener noreferrer">Licence AGPL</a></span>
+            </footer>
         </main>
     </div>
 
