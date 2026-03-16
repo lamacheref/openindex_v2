@@ -51,6 +51,16 @@ POSTGRES_PASSWORD=openindex_secure_password
 
 ## Utilisation
 
+## Exécution avec Docker
+
+```bash
+docker build -t openindexv2:local .
+docker run --rm -p 3000:3000 openindexv2:local
+```
+
+> ⚠️ Utilisez toujours le nom d'image (`openindexv2:local`) après `docker run --rm` pour éviter l'erreur `Unable to find image 'sh:latest' locally`.
+
+
 Pour démarrer le crawler, exécutez:
 
 ```bash
@@ -76,4 +86,4 @@ Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter d
 
 ## Licence
 
-Ce projet est sous licence MIT.# openindex_v2
+Ce projet est sous licence AGPL-3.0.
