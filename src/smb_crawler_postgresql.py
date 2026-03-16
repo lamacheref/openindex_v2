@@ -244,7 +244,7 @@ class SMBCrawlerPostgreSQL:
         """
         try:
             # Extraire les composants du chemin UNC
-            parts = unc_path.replace('\\', '').split('\')
+            parts = unc_path.strip('\\').split('\\')
             server = parts[0]
             share = parts[1]
             subdir = '\\'.join(parts[2:]) if len(parts) > 2 else ''
@@ -957,6 +957,8 @@ def main():
     print("\nDémarrage du crawl récursif complet...")
     print("Appuyez sur Ctrl+C pour arrêter")
 
+    base_path = os.getenv('SMB_BASE_PATH', '')
+
     try:
         # Sauvegarder la configuration
         config_id = save_configuration(
@@ -967,6 +969,22 @@ def main():
             smb_config["domain"],
             base_path
         )
-        
+
         # Démarrer le crawl
         stats = crawler.start_crawl()
+        print(f"\n✅ Crawl terminé (configuration #{config_id})")
+        print(
+            f"📊 Résumé: {stats['total_files']:,} fichiers, "
+            f"{stats['total_directories']:,} répertoires, "
+            f"{stats['total_size'] / 1024 / 1024:.1f} MB"
+        )
+    except KeyboardInterrupt:
+        print("\n⚠️ Crawl interrompu par l'utilisateur")
+        crawler.stop()
+    except Exception as exc:
+        print(f"\n❌ Erreur durant le crawl: {exc}")
+        raise
+
+
+if __name__ == '__main__':
+    main()
