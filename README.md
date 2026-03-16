@@ -97,3 +97,26 @@ Les services `web` et `crawler` sont buildés par GitHub Actions via `.github/wo
 - `ghcr.io/lamacheref/openindex_v2-crawler:latest`
 
 Le `docker-compose.yml` consomme ces images directement (pas de build local des Dockerfiles).
+
+
+## Versioning automatique (post-commit)
+
+Un hook `post-commit` est fourni pour mettre à jour automatiquement :
+
+- `COMMIT` : hash court du commit courant,
+- `VERSION` : format `Major.Minor.Fix`.
+
+Règles appliquées :
+- `Major` (fixé à `2`) : évolution majeure backend/frontend rendant l’ancienne branche majeure obsolète,
+- `Minor` : changement notable de fonctionnalité (ajout ou obsolescence),
+- `Fix` : corrections, ajustements mineurs ou design.
+
+Par défaut, le hook incrémente `Fix` à chaque commit local et maintient `Major=2`.
+
+### Activation
+
+```bash
+./scripts/setup-git-hooks.sh
+```
+
+Ensuite, après chaque commit, `COMMIT` et `VERSION` sont régénérés dans l’arbre de travail.
