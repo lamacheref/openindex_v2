@@ -37,11 +37,11 @@ class ConfigManager:
 def save_configuration(server: str, share: str, username: str, password: str, domain: str, path: str = '') -> int:
     """Persist la configuration courante dans PostgreSQL et retourne son id."""
     conn = psycopg2.connect(
-        host=os.getenv('POSTGRES_HOST', 'localhost'),
+        host=os.getenv('POSTGRES_HOST', 'db'),
         port=int(os.getenv('POSTGRES_PORT', '5432')),
         dbname=os.getenv('POSTGRES_DB', 'openindex'),
-        user=os.getenv('POSTGRES_USER', 'openindex_user'),
-        password=os.getenv('POSTGRES_PASSWORD', 'openindex_secure_password'),
+        user=os.getenv('POSTGRES_USER', 'user'),
+        password=os.getenv('POSTGRES_PASSWORD', 'password'),
     )
 
     try:

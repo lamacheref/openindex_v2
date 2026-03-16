@@ -14,11 +14,11 @@ class PostgreSQLAdapter:
 
     def _connect(self):
         return psycopg2.connect(
-            host=self.config.get('host', 'localhost'),
+            host=self.config.get('host', 'db'),
             port=int(self.config.get('port', 5432)),
             dbname=self.config.get('database', 'openindex'),
-            user=self.config.get('user', 'openindex_user'),
-            password=self.config.get('password', 'openindex_secure_password'),
+            user=self.config.get('user', 'user'),
+            password=self.config.get('password', 'password'),
         )
 
     def initialize_database(self) -> None:

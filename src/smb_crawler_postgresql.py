@@ -53,11 +53,11 @@ class SMBCrawlerPostgreSQL:
         self.share_name = share_name
         self.domain = domain
         self.postgres_config = postgres_config or {
-            'host': os.getenv('POSTGRES_HOST', 'localhost'),
+            'host': os.getenv('POSTGRES_HOST', 'db'),
             'port': int(os.getenv('POSTGRES_PORT', '5432')),
             'database': os.getenv('POSTGRES_DB', 'openindex'),
-            'user': os.getenv('POSTGRES_USER', 'openindex_user'),
-            'password': os.getenv('POSTGRES_PASSWORD', 'openindex_secure_password')
+            'user': os.getenv('POSTGRES_USER', 'user'),
+            'password': os.getenv('POSTGRES_PASSWORD', 'password')
         }
         self.max_workers = max_workers
         self.delay_between_requests = delay_between_requests
@@ -130,11 +130,11 @@ class SMBCrawlerPostgreSQL:
         self.share_name = share_name
         self.domain = domain
         self.postgres_config = postgres_config or {
-            'host': os.getenv('POSTGRES_HOST', 'localhost'),
+            'host': os.getenv('POSTGRES_HOST', 'db'),
             'port': int(os.getenv('POSTGRES_PORT', '5432')),
             'database': os.getenv('POSTGRES_DB', 'openindex'),
-            'user': os.getenv('POSTGRES_USER', 'openindex_user'),
-            'password': os.getenv('POSTGRES_PASSWORD', 'openindex_secure_password')
+            'user': os.getenv('POSTGRES_USER', 'user'),
+            'password': os.getenv('POSTGRES_PASSWORD', 'password')
         }
         self.max_workers = max_workers
         self.delay_between_requests = delay_between_requests
@@ -937,11 +937,11 @@ def main():
         share_name=smb_config["share_name"],
         domain=smb_config["domain"],
         postgres_config={
-            'host': os.getenv('POSTGRES_HOST', 'localhost'),
+            'host': os.getenv('POSTGRES_HOST', 'db'),
             'port': int(os.getenv('POSTGRES_PORT', '5432')),
             'database': os.getenv('POSTGRES_DB', 'openindex'),
-            'user': os.getenv('POSTGRES_USER', 'openindex_user'),
-            'password': os.getenv('POSTGRES_PASSWORD', 'openindex_secure_password')
+            'user': os.getenv('POSTGRES_USER', 'user'),
+            'password': os.getenv('POSTGRES_PASSWORD', 'password')
         },
         max_workers=crawler_config["max_workers"],
         delay_between_requests=crawler_config["delay_between_requests"],

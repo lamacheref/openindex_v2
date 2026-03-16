@@ -4,15 +4,15 @@ const cors = require('cors');
 const { Pool } = require('pg');
 
 const app = express();
-const port = 3000;
+const port = Number(process.env.PORT || 3000);
 
 // Configuration de la base de données PostgreSQL
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'openindex',
-    password: 'postgres',
-    port: 5432,
+    user: process.env.POSTGRES_USER || 'user',
+    host: process.env.POSTGRES_HOST || 'db',
+    database: process.env.POSTGRES_DB || 'openindex',
+    password: process.env.POSTGRES_PASSWORD || 'password',
+    port: Number(process.env.POSTGRES_PORT || 5432),
 });
 
 // Middleware
