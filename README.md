@@ -91,7 +91,13 @@ Ce projet est sous licence AGPL-3.0.
 
 ## Images Docker publiées
 
-Les services `web` et `crawler` sont buildés par GitHub Actions via `.github/workflows/docker-build.yml` puis publiés dans GHCR :
+Les services `web` et `crawler` sont buildés par GitHub Actions via `.github/workflows/docker-build.yml` puis publiés dans GHCR.
+
+Le workflow déclenche un build/push **uniquement** si des fichiers liés au service ont changé (détection ciblée par `paths-filter`) :
+- `web` : `docker/web.Dockerfile`, `server.js`, `package*.json`, `ui/**`
+- `crawler` : `docker/crawler.Dockerfile`, `src/**`, `sql/**`
+
+Images publiées :
 
 - `ghcr.io/lamacheref/openindex_v2-web:latest`
 - `ghcr.io/lamacheref/openindex_v2-crawler:latest`
