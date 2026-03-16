@@ -11,6 +11,8 @@ import hashlib
 import time
 import threading
 import subprocess
+import logging
+import logging.handlers
 from datetime import datetime
 from pathlib import Path
 from queue import Queue, Empty
@@ -18,7 +20,7 @@ from concurrent.futures import ThreadPoolExecutor
 import smbclient
 from logging_config import get_logger_manager
 from postgres_adapter import PostgreSQLAdapter
-from config_manager import ConfigManager
+from config_manager import ConfigManager, save_configuration
 
 
 class SMBCrawlerPostgreSQL:
