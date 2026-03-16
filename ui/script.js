@@ -67,10 +67,27 @@ document.addEventListener('DOMContentLoaded', function() {
         el.classList.add('fade-in');
     });
 
+
+    const currentUserEl = document.getElementById('current-user');
+    if (currentUserEl) {
+        currentUserEl.textContent = document.body.dataset.user || 'invité';
+    }
+
     const lastCommitEl = document.getElementById('last-commit');
     if (lastCommitEl) {
-        const commitHash = document.body.dataset.lastCommit || 'N/A';
-        lastCommitEl.textContent = commitHash;
+        const commitFromData = document.body.dataset.lastCommit;
+        if (commitFromData) {
+            lastCommitEl.textContent = commitFromData;
+        } else {
+            fetch('../COMMIT')
+                .then(response => response.ok ? response.text() : Promise.reject())
+                .then(commit => {
+                    lastCommitEl.textContent = commit.trim() || 'N/A';
+                })
+                .catch(() => {
+                    lastCommitEl.textContent = 'N/A';
+                });
+        }
     }
 
     const versionEl = document.getElementById('project-version');

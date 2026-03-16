@@ -6,7 +6,7 @@
     <title>Dashboard du Crawler SMB</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-last-commit="6ff8374">
+<body data-last-commit="" data-user="admin">
     <div class="dashboard-container">
         <aside class="sidebar">
             <h2>Menu</h2>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="header-right">
-                    <div class="user-info">Utilisateur : <strong>admin</strong></div>
+                    <div class="user-info">Utilisateur : <strong id="current-user">-</strong></div>
                     <div class="crawler-status status-available" id="crawler-status">
                         <span class="status-dot" aria-hidden="true"></span>
                         <span class="status-label">Crawler disponible</span>
@@ -70,7 +70,7 @@
 
             <footer class="footer">
                 <span>SMiDeN</span>
-                <span>Dernier commit : <code id="last-commit">-</code></span>
+                <span>Dernier commit appliqué : <code id="last-commit">-</code></span>
                 <span><a href="../LICENSE" target="_blank" rel="noopener noreferrer">Licence AGPL</a></span>
             </footer>
         </main>
