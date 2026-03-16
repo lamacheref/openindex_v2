@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+COMMIT_FILE="${REPO_ROOT}/COMMIT"
+VERSION_FILE="${REPO_ROOT}/VERSION"
+
+CURRENT_COMMIT="$(git rev-parse --short HEAD)"
+printf '%s\n' "${CURRENT_COMMIT}" > "${COMMIT_FILE}"
+
+if [[ -f "${VERSION_FILE}" ]]; then
+  CURRENT_VERSION="$(tr -d '[:space:]' < "${VERSION_FILE}")"
+else
+  CURRENT_VERSION="2.0.0"
+fi
+
+if [[ ! "${CURRENT_VERSION}" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+  CURRENT_VERSION="2.0.0"
+fi
+
+MAJOR="${BASH_REMATCH[1]}"
+MINOR="${BASH_REMATCH[2]}"
+FIX="${BASH_REMATCH[3]}"
+
+if [[ "${MAJOR}" -ne 2 ]]; then
+  MAJOR=2
+  MINOR=0
+  FIX=0
+else
+  FIX=$((FIX + 1))
+fi
+
+printf '%s.%s.%s\n' "${MAJOR}" "${MINOR}" "${FIX}" > "${VERSION_FILE}"
+
+cat <<MSG
+[post-commit] COMMIT mis à jour: ${CURRENT_COMMIT}
+[post-commit] VERSION mise à jour: ${MAJOR}.${MINOR}.${FIX}
+Pensez à commit ces fichiers si vous souhaitez les versionner.
+MSG

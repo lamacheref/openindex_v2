@@ -17,7 +17,7 @@ OpenIndexV2 est un outil de crawler SMB qui permet de parcourir un partage SMB e
 
 - Python 3.10+
 - PostgreSQL 17
-- Bibliothèques Python: smbclient, psycopg2, python-dotenv
+- Bibliothèques Python: smbprotocol (module `smbclient`), psycopg2, python-dotenv
 
 ## Installation
 
@@ -51,6 +51,16 @@ POSTGRES_PASSWORD=openindex_secure_password
 
 ## Utilisation
 
+## Exécution avec Docker
+
+```bash
+docker build -t openindexv2:local .
+docker run --rm -p 3000:3000 openindexv2:local
+```
+
+> ⚠️ Utilisez toujours le nom d'image (`openindexv2:local`) après `docker run --rm` pour éviter l'erreur `Unable to find image 'sh:latest' locally`.
+
+
 Pour démarrer le crawler, exécutez:
 
 ```bash
@@ -76,4 +86,37 @@ Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter d
 
 ## Licence
 
-Ce projet est sous licence MIT.# openindex_v2
+Ce projet est sous licence AGPL-3.0.
+
+
+## Images Docker publiées
+
+Les services `web` et `crawler` sont buildés par GitHub Actions via `.github/workflows/docker-build.yml` puis publiés dans GHCR :
+
+- `ghcr.io/lamacheref/openindex_v2-web:latest`
+- `ghcr.io/lamacheref/openindex_v2-crawler:latest`
+
+Le `docker-compose.yml` consomme ces images directement (pas de build local des Dockerfiles).
+
+
+## Versioning automatique (post-commit)
+
+Un hook `post-commit` est fourni pour mettre à jour automatiquement :
+
+- `COMMIT` : hash court du commit courant,
+- `VERSION` : format `Major.Minor.Fix`.
+
+Règles appliquées :
+- `Major` (fixé à `2`) : évolution majeure backend/frontend rendant l’ancienne branche majeure obsolète,
+- `Minor` : changement notable de fonctionnalité (ajout ou obsolescence),
+- `Fix` : corrections, ajustements mineurs ou design.
+
+Par défaut, le hook incrémente `Fix` à chaque commit local et maintient `Major=2`.
+
+### Activation
+
+```bash
+./scripts/setup-git-hooks.sh
+```
+
+Ensuite, après chaque commit, `COMMIT` et `VERSION` sont régénérés dans l’arbre de travail.
