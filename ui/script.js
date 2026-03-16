@@ -1,7 +1,6 @@
 // Script principal pour le dashboard du crawler SMB
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Simuler des données pour le dashboard
     const mockData = {
         fileCount: 1245,
         dirCount: 321,
@@ -13,40 +12,98 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: 'presentation.pptx', size: '3.5 MB', date: '2023-11-13' },
             { name: 'spreadsheet.xlsx', size: '1.2 MB', date: '2023-11-12' },
             { name: 'code.js', size: '0.5 MB', date: '2023-11-11' }
-        ]
+        ],
+        crawlerState: 'available'
     };
 
-    // Mettre à jour les statistiques
-    document.getElementById('file-count').textContent = mockData.fileCount.toLocaleString();
-    document.getElementById('dir-count').textContent = mockData.dirCount.toLocaleString();
-    document.getElementById('total-size').textContent = `${mockData.totalSize.toLocaleString()} MB`;
-    document.getElementById('duplicate-count').textContent = mockData.duplicateCount.toLocaleString();
+    const statusConfig = {
+        inactive: { className: 'status-inactive', label: 'Crawler inactif' },
+        available: { className: 'status-available', label: 'Crawler disponible' },
+        crawling: { className: 'status-crawling', label: 'Crawler en cours de crawl' }
+    };
 
-    // Remplir la liste des fichiers récents
+    const fileCountEl = document.getElementById('file-count');
+    const dirCountEl = document.getElementById('dir-count');
+    const totalSizeEl = document.getElementById('total-size');
+    const duplicateCountEl = document.getElementById('duplicate-count');
+
+    if (fileCountEl) fileCountEl.textContent = mockData.fileCount.toLocaleString();
+    if (dirCountEl) dirCountEl.textContent = mockData.dirCount.toLocaleString();
+    if (totalSizeEl) totalSizeEl.textContent = `${mockData.totalSize.toLocaleString()} MB`;
+    if (duplicateCountEl) duplicateCountEl.textContent = mockData.duplicateCount.toLocaleString();
+
     const fileList = document.querySelector('.file-list');
-    mockData.recentFiles.forEach(file => {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-        fileItem.innerHTML = `
-            <div class="file-name">${file.name}</div>
-            <div class="file-size">${file.size}</div>
-            <div class="file-date">${file.date}</div>
-        `;
-        fileList.appendChild(fileItem);
-    });
+    if (fileList) {
+        mockData.recentFiles.forEach(file => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-name">${file.name}</div>
+                <div class="file-size">${file.size}</div>
+                <div class="file-date">${file.date}</div>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
 
-    // Ajouter des effets d'animation
+    const setCrawlerStatus = (state) => {
+        const statusElement = document.getElementById('crawler-status');
+        if (!statusElement || !statusConfig[state]) {
+            return;
+        }
+
+        statusElement.classList.remove('status-inactive', 'status-available', 'status-crawling');
+        statusElement.classList.add(statusConfig[state].className);
+
+        const label = statusElement.querySelector('.status-label');
+        if (label) {
+            label.textContent = statusConfig[state].label;
+        }
+    };
+
+    setCrawlerStatus(mockData.crawlerState);
+
     document.querySelectorAll('.stat-card, .recent-files-block').forEach(el => {
         el.classList.add('fade-in');
     });
 
-    // Gérer le clic sur le bouton Actualiser
-    document.querySelector('.header-actions button:first-child').addEventListener('click', function() {
-        alert('Fonctionnalité d\'actualisation à implémenter');
-    });
 
-    // Gérer le clic sur le bouton Exporter
-    document.querySelector('.header-actions button:last-child').addEventListener('click', function() {
-        alert('Fonctionnalité d\'exportation à implémenter');
-    });
+    const currentUserEl = document.getElementById('current-user');
+    if (currentUserEl) {
+        currentUserEl.textContent = document.body.dataset.user || 'invité';
+    }
+
+    const lastCommitEl = document.getElementById('last-commit');
+    if (lastCommitEl) {
+        const commitFromData = document.body.dataset.lastCommit;
+        if (commitFromData) {
+            lastCommitEl.textContent = commitFromData;
+        } else {
+            fetch('../COMMIT')
+                .then(response => response.ok ? response.text() : Promise.reject())
+                .then(commit => {
+                    lastCommitEl.textContent = commit.trim() || 'N/A';
+                })
+                .catch(() => {
+                    lastCommitEl.textContent = 'N/A';
+                });
+        }
+    }
+
+    const versionEl = document.getElementById('project-version');
+    if (versionEl) {
+        fetch('../VERSION')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Version indisponible');
+                }
+                return response.text();
+            })
+            .then(version => {
+                versionEl.textContent = version.trim() || 'N/A';
+            })
+            .catch(() => {
+                versionEl.textContent = 'N/A';
+            });
+    }
 });
