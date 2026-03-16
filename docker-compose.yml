@@ -19,7 +19,8 @@ services:
 
   crawler:
     image: ghcr.io/lamacheref/openindex_v2-crawler:latest
-    command: python src/smb_crawler_postgresql.py
+    entrypoint: ["python"]
+    command: ["src/smb_crawler_postgresql.py"]
     depends_on:
       - db
 
