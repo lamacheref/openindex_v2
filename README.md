@@ -17,7 +17,7 @@ OpenIndexV2 est un outil de crawler SMB qui permet de parcourir un partage SMB e
 
 - Python 3.10+
 - PostgreSQL 17
-- Bibliothèques Python: smbclient, psycopg2, python-dotenv
+- Bibliothèques Python: smbprotocol (module `smbclient`), psycopg2, python-dotenv
 
 ## Installation
 

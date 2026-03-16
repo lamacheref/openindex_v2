@@ -8,6 +8,6 @@ RUN apt-get update \
 
 COPY . .
 
-RUN pip install --no-cache-dir smbclient psycopg2-binary python-dotenv
+RUN pip install --no-cache-dir smbprotocol psycopg2-binary python-dotenv
 
 CMD ["python", "src/smb_crawler_postgresql.py"]
