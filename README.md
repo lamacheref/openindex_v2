@@ -102,7 +102,7 @@ Images publiées :
 - `ghcr.io/lamacheref/openindex_v2-web:latest`
 - `ghcr.io/lamacheref/openindex_v2-crawler:latest`
 
-Le `docker-compose.yml` consomme ces images directement (pas de build local des Dockerfiles).
+Le fichier `docker-compose.yml` consomme ces images directement (pas de build local des Dockerfiles). Utilisez la commande `docker compose` (et non `docker-compose`) pour démarrer la stack.
 
 
 ## Versioning automatique (post-commit)
