@@ -87,3 +87,13 @@ Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter d
 ## Licence
 
 Ce projet est sous licence AGPL-3.0.
+
+
+## Images Docker publiées
+
+Les services `web` et `crawler` sont buildés par GitHub Actions via `.github/workflows/docker-build.yml` puis publiés dans GHCR :
+
+- `ghcr.io/lamacheref/openindex_v2-web:latest`
+- `ghcr.io/lamacheref/openindex_v2-crawler:latest`
+
+Le `docker-compose.yml` consomme ces images directement (pas de build local des Dockerfiles).
